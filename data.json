@@ -564,7 +564,7 @@
         "Command__c": "C:\\Users\\User\\.vscode\\extensions\\dbaeumer.vscode-eslint-1.9*",
         "EnabledAction__c": true,
         "ErrorMessage__c": "Invalid response received",
-        "Expected__c": "dbaeumer.vscode-eslint-1.9.0",
+        "Expected__c": "dbaeumer.vscode-eslint-1.9.1",
         "Fix__c": "Please ensure VS Plugins are installed. https://marketplace.visualstudio.com/items?itemName=salesforce.salesforcedx-vscode",
         "Message__c": "Checking path: C:\\Users\\User\\.vscode\\extensions\\dbaeumer.vscode-eslint-1.9.0*",
         "Operation__c": "Check Path",
