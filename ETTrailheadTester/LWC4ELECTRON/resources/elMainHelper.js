@@ -13,6 +13,7 @@ const ipcMain = electron.ipcMain;
 const session = electron.session;
 const nativeImage = electron.nativeImage;
 const BrowserWindow = electron.BrowserWindow;
+const shell =  electron.shell;
 
 // Other libraries
 const ETEPL_Client = require("./ETEPL2/ETEPL_Client");
@@ -173,7 +174,9 @@ module.exports = class ELMainHelper {
 					config.electron.mainHelper.loadPage(config.pages.sampleFile);
 				}
 			});
+		}
 
+		if (!config.debug.preventQuit) {
 			// Quit
 			trayMenu.push({
 				label: "Quit",
@@ -206,39 +209,43 @@ module.exports = class ELMainHelper {
 		downloadItem.on("done", (event, state) => {
 			switch (state) {
 				case "completed":
-					// Execute
-					let cmd = "";
-					let examStarted = false;
-
-					config.logger.logs.addMessage(config.logger.levels.data, "downloadfile", downloadItem.getSavePath());
-
-					if (config.os.isMac) {
-						cmd = `open ${downloadItem.getSavePath()}`;
-					} else {
-						cmd = `start ${downloadItem.getSavePath()}`;
-					}
-
-					while (!examStarted) {
-						try {
-							child_process.execSync(cmd);
-							const electronJson = config.etEpl.readElectronJson();
-							delete electronJson.forcedLogin;
-							config.etEpl.writeElectronJson(electronJson);
-
-							// EXAM HAS SARTED!!!
-							examStarted = true;
-						} catch (ex) {
-							if (config.os.isMac) {
-								// The exam is not for Mac :-)
-								examStarted = true;
-							} else {
-								examStarted = true;
-								config.logger.logs.addException(config.logger.levels.fatal, "downloadfile", ex);
-								// dialog.showErrorBox(`Critical Error`, `You must accept to run the exam!`);
-							}
-						}
-					}
+					let exam = downloadItem.getSavePath();
+					shell.openItem(exam);
 					config.electron.mainHelper.showHideWindow(false);
+	
+					// // Execute
+					// let cmd = "";
+					// let examStarted = false;
+
+					// config.logger.logs.addMessage(config.logger.levels.data, "downloadfile", downloadItem.getSavePath());
+
+					// if (config.os.isMac) {
+					// 	cmd = `open ${downloadItem.getSavePath()}`;
+					// } else {
+					// 	cmd = `start ${downloadItem.getSavePath()}`;
+					// }
+
+					// while (!examStarted) {
+					// 	try {
+					// 		child_process.execSync(cmd);
+					// 		const electronJson = config.etEpl.readElectronJson();
+					// 		delete electronJson.forcedLogin;
+					// 		config.etEpl.writeElectronJson(electronJson);
+
+					// 		// EXAM HAS SARTED!!!
+					// 		examStarted = true;
+					// 	} catch (ex) {
+					// 		if (config.os.isMac) {
+					// 			// The exam is not for Mac :-)
+					// 			examStarted = true;
+					// 		} else {
+					// 			examStarted = true;
+					// 			config.logger.logs.addException(config.logger.levels.fatal, "downloadfile", ex);
+					// 			// dialog.showErrorBox(`Critical Error`, `You must accept to run the exam!`);
+					// 		}
+					// 	}
+					// }
+					// config.electron.mainHelper.showHideWindow(false);
 					break;
 				case "cancelled":
 					break;
