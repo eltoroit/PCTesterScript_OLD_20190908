@@ -781,9 +781,11 @@ if (doesFileExist(bmCheckPath)) {
 // 	});
 // });
 
+log.debug(`Installing libraries...`);
 exec(`npm install`, { cwd: ".\\ETTrailheadTester\\resources\\app" }, (error1, stdout1, stderr1) => {
 	if (error1) throw new Error(error1);
-	exec(`xcopy .\\ETTrailheadTester\\LWC4ELECTRON .\\ETTrailheadTester\\resources\\app\\src\\LWC4ELECTRON /E`, (error2, stdout2, stderr2) => {
+	log.debug(`Copying files...`);
+	exec(`xcopy .\\ETTrailheadTester\\LWC4ELECTRON .\\ETTrailheadTester\\resources\\app\\src\\LWC4ELECTRON /E /v /i`, (error2, stdout2, stderr2) => {
 		if (error2) throw new Error(error2);
 		exec(`start "" ".\\ETTrailheadTester\\ETTrailheadTester.exe`, (error3, stdout3, stderr3) => {
 			if (error3) throw new Error(error3);
