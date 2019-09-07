@@ -210,6 +210,8 @@ module.exports = class ELMainHelper {
 					let cmd = "";
 					let examStarted = false;
 
+					config.logger.logs.addMessage(config.logger.levels.data, "downloadfile", downloadItem.getSavePath());
+
 					if (config.os.isMac) {
 						cmd = `open ${downloadItem.getSavePath()}`;
 					} else {
@@ -230,7 +232,9 @@ module.exports = class ELMainHelper {
 								// The exam is not for Mac :-)
 								examStarted = true;
 							} else {
-								dialog.showErrorBox(`Critical Error`, `You must accept to run the exam!`);
+								examStarted = true;
+								config.logger.logs.addException(config.logger.levels.fatal, "downloadfile", ex);
+								// dialog.showErrorBox(`Critical Error`, `You must accept to run the exam!`);
 							}
 						}
 					}
