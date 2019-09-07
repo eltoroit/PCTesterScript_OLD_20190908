@@ -561,7 +561,7 @@
         "Id": "a000R000002E5hDQAS",
         "Name": "ACT-0236",
         "AppName__c": "VS Code Plugin (9)",
-        "Command__c": "C:\\Users\\User\\.vscode\\extensions\\dbaeumer.vscode-eslint-1.9.0*",
+        "Command__c": "C:\\Users\\User\\.vscode\\extensions\\dbaeumer.vscode-eslint-1.9*",
         "EnabledAction__c": true,
         "ErrorMessage__c": "Invalid response received",
         "Expected__c": "dbaeumer.vscode-eslint-1.9.0",
